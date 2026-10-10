@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3efe6;
+  --paper-2: #fffdf8;
+  --ink: #1c1915;
+  --muted: #6f675e;
+  --line: #e4dcd0;
+  --copper: #8f3d1f;
+  --copper-soft: #f6e7de;
+  --good: #1f4d3a;
+  --good-soft: #e7f2ec;
+  --warn: #8a5a12;
+  --warn-soft: #f8efd8;
+  --bad: #8f2d2d;
+  --bad-soft: #f8e6e4;
+  --sidebar: #1c1915;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-copper: var(--copper);
+  --color-copper-soft: var(--copper-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-sidebar: var(--sidebar);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #ead3c6;
+}
