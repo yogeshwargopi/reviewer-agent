@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { PRODUCT_NAME, USER_AGENT } from "@/lib/brand";
 import { appUrl } from "@/server/env";
 import { writeEnvValues } from "@/server/env-file";
 import { log } from "@/server/log";
@@ -17,7 +18,7 @@ export function buildGithubAppManifest(webhookUrl: string) {
   const origin = appUrl();
   const suffix = Math.random().toString(36).slice(2, 8);
   return {
-    name: `Reviewer ${suffix}`,
+    name: `${PRODUCT_NAME} ${suffix}`,
     url: origin,
     public: false,
     request_oauth_on_install: true,
@@ -63,7 +64,7 @@ export async function registerAppFromManifest(code: string) {
     method: "POST",
     headers: {
       Accept: "application/vnd.github+json",
-      "User-Agent": "reviewer-agent",
+      "User-Agent": USER_AGENT,
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });

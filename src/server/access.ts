@@ -1,4 +1,5 @@
 import { and, eq } from "drizzle-orm";
+import { USER_AGENT } from "@/lib/brand";
 import { getDb } from "./db/client";
 import { accounts, installationAccess, installations, users } from "./db/schema";
 import { log } from "./log";
@@ -27,7 +28,7 @@ export async function accessibleInstallations(userId: string) {
           Authorization: `Bearer ${account.access_token}`,
           Accept: "application/vnd.github+json",
           "X-GitHub-Api-Version": "2022-11-28",
-          "User-Agent": "reviewer-agent",
+          "User-Agent": USER_AGENT,
         },
         cache: "no-store",
       });

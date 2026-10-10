@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { productMention } from "@/lib/brand";
 import { getDb } from "../db/client";
 import { installations, policies, repositories, suppressions, webhookDeliveries } from "../db/schema";
 import { log } from "../log";
@@ -197,7 +198,7 @@ async function handleIssueComment(action: string | null, payload: Record<string,
         repo.owner,
         repo.name,
         pullNumber,
-        "Name the note to suppress: `@reviewer-agent ignore path/to/file.ts:42`.",
+        `Name the note to suppress: \`${productMention("ignore", "path/to/file.ts:42")}\`.`,
       );
       return;
     }

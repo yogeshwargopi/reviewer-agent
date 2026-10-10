@@ -1,6 +1,6 @@
-# Reviewer
+# Locus
 
-Reviewer is a self-hosted GitHub App. It reviews every enabled pull request with a hosted model, then publishes one review, inline comments on changed lines, and a `reviewer-agent` check.
+Locus is a self-hosted GitHub App. It reviews every enabled pull request with a hosted model, then publishes one review, inline comments on changed lines, and a `Locus` check.
 
 You run it yourself. Organizations, installations, repositories, and policies are first-class, so another GitHub account can be connected later without a rewrite.
 
@@ -16,7 +16,7 @@ On pull request open, update, reopen, or ready-for-review, the app:
 
 Blockers request changes only when the policy says so. The app never approves a pull request.
 
-Drafts are skipped. A `skip-review` label skips the pull request. `@reviewer-agent review` forces a run. `@reviewer-agent ignore path/to/file.ts:42` suppresses that note later.
+Drafts are skipped. A `skip-review` label skips the pull request. `@locus review` forces a run. `@locus ignore path/to/file.ts:42` suppresses that note later.
 
 ## Local setup
 

@@ -1,3 +1,5 @@
+import { PRODUCT_NAME } from "@/lib/brand";
+
 export function Gate({
   missing,
   callbackUrl = "/overview",
@@ -14,7 +16,7 @@ export function Gate({
   const githubMissing = missing.some((key) => key.startsWith("GITHUB_"));
   return (
     <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.18em] text-copper">Reviewer</p>
+      <p className="text-xs uppercase tracking-[0.18em] text-copper">{PRODUCT_NAME}</p>
       <h1 className="mt-3 font-serif text-5xl leading-tight tracking-tight">A reviewer that knows your standards.</h1>
       <p className="mt-4 text-lg leading-8 text-muted">
         Install it on the repositories you choose. It reads each pull request, applies your policy, and leaves a

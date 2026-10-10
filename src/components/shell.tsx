@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PRODUCT_NAME } from "@/lib/brand";
 import { signOutAction } from "@/server/actions";
 import { NavLink } from "./nav-link";
 
@@ -18,11 +19,11 @@ export function Shell({
 }) {
   const label = user.login ?? user.name ?? "Signed in";
   return (
-    <div className="min-h-screen bg-paper text-ink md:grid md:grid-cols-[240px_1fr]">
-      <aside className="flex flex-col border-b border-white/10 bg-sidebar text-paper md:min-h-screen md:border-b-0 md:border-r">
+    <div className="min-h-screen bg-paper text-ink md:grid md:h-dvh md:grid-cols-[240px_1fr] md:overflow-hidden">
+      <aside className="flex flex-col border-b border-white/10 bg-sidebar text-paper md:h-full md:overflow-y-auto md:border-b-0 md:border-r">
         <div className="px-6 py-7">
           <Link href="/overview" className="font-serif text-3xl tracking-tight text-paper">
-            Reviewer
+            {PRODUCT_NAME}
           </Link>
           <p className="mt-2 text-sm text-paper/60">Pull requests, with a point of view.</p>
         </div>
@@ -45,7 +46,9 @@ export function Shell({
           </form>
         </div>
       </aside>
-      <div className="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-10">{children}</div>
+      <div className="md:min-h-0 md:overflow-y-auto">
+        <div className="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-10">{children}</div>
+      </div>
     </div>
   );
 }

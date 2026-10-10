@@ -1,3 +1,5 @@
+import { PRODUCT_HANDLE } from "@/lib/brand";
+
 const REQUIRED_FOR_APP = [
   "DATABASE_URL",
   "AUTH_SECRET",
@@ -32,7 +34,7 @@ export function appUrl(): string {
 }
 
 export function githubAppSlug(): string {
-  return process.env.GITHUB_APP_SLUG?.trim() || "reviewer-agent";
+  return process.env.GITHUB_APP_SLUG?.trim() || PRODUCT_HANDLE;
 }
 
 export function githubPrivateKey(): string {

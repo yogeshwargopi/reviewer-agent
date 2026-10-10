@@ -1,3 +1,4 @@
+import { PRODUCT_HANDLE, productMention } from "@/lib/brand";
 import {
   CATEGORY_LABELS,
   SEVERITY_RANK,
@@ -121,7 +122,7 @@ export function formatComment(finding: PreparedFinding): string {
     suggestion ? "" : null,
     suggestion ? `Prefer: ${suggestion}` : null,
     "",
-    `<!-- reviewer-agent:${finding.signature} -->`,
+    `<!-- ${PRODUCT_HANDLE}:${finding.signature} -->`,
   ]
     .filter((line) => line != null)
     .join("\n");
@@ -164,7 +165,7 @@ export function buildSummary(input: {
     const extra = input.skipped.length > 12 ? ` and ${input.skipped.length - 12} more` : "";
     lines.push(`Skipped ${input.skipped.length}: ${sample.join(", ")}${extra}.`);
   }
-  lines.push("", "Suppress a note with `@reviewer-agent ignore path/to/file.ts:42`.");
+  lines.push("", `Suppress a note with \`${productMention("ignore", "path/to/file.ts:42")}\`.`);
   return lines.join("\n");
 }
 

@@ -3,8 +3,8 @@ import { parseCommand, parseIgnoreTarget } from "./commands";
 
 describe("pull request commands", () => {
   it("recognizes review and ignore commands", () => {
-    expect(parseCommand("please @reviewer-agent review this")).toEqual({ type: "review" });
-    expect(parseCommand("@reviewer-agent ignore src/app.ts:10")).toEqual({
+    expect(parseCommand("please @locus review this")).toEqual({ type: "review" });
+    expect(parseCommand("@locus ignore src/app.ts:10")).toEqual({
       type: "ignore",
       target: "src/app.ts:10",
     });
