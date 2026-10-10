@@ -164,7 +164,7 @@ export function PolicyForm({
         </label>
       </section>
 
-      <button type="submit" className="rounded-md bg-ink px-4 py-2 text-sm text-paper hover:bg-copper">
+      <button type="submit" className="rounded-md bg-copper px-4 py-2 text-sm text-paper hover:bg-copper-deep">
         {submitLabel}
       </button>
     </form>

@@ -19,13 +19,14 @@ export function Shell({
 }) {
   const label = user.login ?? user.name ?? "Signed in";
   return (
-    <div className="min-h-screen bg-paper text-ink md:grid md:h-dvh md:grid-cols-[240px_1fr] md:overflow-hidden">
-      <aside className="flex flex-col border-b border-white/10 bg-sidebar text-paper md:h-full md:overflow-y-auto md:border-b-0 md:border-r">
-        <div className="px-6 py-7">
-          <Link href="/overview" className="font-serif text-3xl tracking-tight text-paper">
-            {PRODUCT_NAME}
+    <div className="min-h-screen bg-canvas text-ink md:grid md:h-dvh md:grid-cols-[248px_1fr] md:overflow-hidden">
+      <aside className="flex flex-col border-b border-line bg-paper md:h-full md:overflow-y-auto md:border-b-0 md:border-r">
+        <div className="px-5 pb-4 pt-6">
+          <Link href="/overview" className="flex items-center gap-2.5">
+            <span className="grid size-8 place-items-center rounded-lg bg-copper text-sm font-medium text-paper">L</span>
+            <span className="font-serif text-[1.65rem] leading-none tracking-tight">{PRODUCT_NAME}</span>
           </Link>
-          <p className="mt-2 text-sm text-paper/60">Pull requests, with a point of view.</p>
+          <p className="mt-3 text-xs leading-5 text-muted">Pull requests, with a point of view.</p>
         </div>
         <nav className="flex gap-1 px-3 md:flex-col">
           {links.map((link) => (
@@ -34,20 +35,20 @@ export function Shell({
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto flex items-center justify-between gap-3 px-6 py-6">
-          <div className="min-w-0">
-            <p className="truncate text-sm text-paper">{label}</p>
-            <p className="text-xs text-paper/50">GitHub</p>
+        <div className="mt-auto border-t border-line px-5 py-4">
+          <p className="truncate text-sm font-medium">{label}</p>
+          <div className="mt-1 flex items-center justify-between gap-3">
+            <p className="text-xs text-muted">GitHub</p>
+            <form action={signOutAction}>
+              <button type="submit" className="text-xs text-muted transition hover:text-ink">
+                Sign out
+              </button>
+            </form>
           </div>
-          <form action={signOutAction}>
-            <button type="submit" className="text-xs uppercase tracking-[0.14em] text-paper/70 hover:text-paper">
-              Sign out
-            </button>
-          </form>
         </div>
       </aside>
       <div className="md:min-h-0 md:overflow-y-auto">
-        <div className="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-10">{children}</div>
+        <div className="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">{children}</div>
       </div>
     </div>
   );

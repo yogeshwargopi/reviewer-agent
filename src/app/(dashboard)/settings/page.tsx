@@ -64,7 +64,7 @@ export default async function SettingsPage({
                       placeholder="Paste a new key"
                       className="min-w-64 flex-1 rounded-md border border-line bg-paper px-3 py-2 text-sm"
                     />
-                    <button type="submit" className="rounded-md bg-ink px-3 py-2 text-sm text-paper">
+                    <button type="submit" className="rounded-md bg-copper px-3 py-2 text-sm text-paper hover:bg-copper-deep">
                       Save key
                     </button>
                   </form>

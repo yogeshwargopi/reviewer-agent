@@ -18,13 +18,13 @@ export function ReviewTable({
 }) {
   if (reviews.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-line px-6 py-10 text-sm text-muted">
+      <div className="rounded-2xl border border-dashed border-line bg-paper px-6 py-12 text-sm text-muted">
         Reviews appear here after an enabled repository opens a pull request.
       </div>
     );
   }
   return (
-    <div className="overflow-hidden rounded-lg border border-line bg-paper-2">
+    <div className="overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_1px_2px_rgba(20,18,28,0.04)]">
       <table className="w-full text-left text-sm">
         <thead className="border-b border-line text-xs uppercase tracking-[0.12em] text-muted">
           <tr>
@@ -36,7 +36,7 @@ export function ReviewTable({
         </thead>
         <tbody>
           {reviews.map((review) => (
-            <tr key={review.id} className="border-t border-line">
+            <tr key={review.id} className="border-t border-line transition hover:bg-canvas">
               <td className="px-4 py-3">
                 <Link href={`/reviews/${review.id}`} className="font-medium hover:text-copper">
                   {review.fullName} #{review.pullNumber}

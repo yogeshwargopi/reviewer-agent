@@ -55,7 +55,7 @@ export default async function RepositoryPage({
       <section className="flex flex-wrap items-center gap-3 rounded-lg border border-line bg-paper-2 p-5">
         <form action={startDryRun}>
           <input type="hidden" name="repositoryId" value={loaded.repository.id} />
-          <button type="submit" className="rounded-md bg-ink px-4 py-2 text-sm text-paper hover:bg-copper">
+          <button type="submit" className="rounded-md bg-copper px-4 py-2 text-sm text-paper hover:bg-copper-deep">
             Dry run latest pull request
           </button>
         </form>
@@ -69,7 +69,7 @@ export default async function RepositoryPage({
           </div>
           <form action={customizeRepository}>
             <input type="hidden" name="repositoryId" value={loaded.repository.id} />
-            <button type="submit" className="rounded-md border border-ink px-4 py-2 text-sm hover:bg-ink hover:text-paper">
+            <button type="submit" className="rounded-md border border-copper px-4 py-2 text-sm text-copper hover:bg-copper hover:text-paper">
               Customize this repository
             </button>
           </form>

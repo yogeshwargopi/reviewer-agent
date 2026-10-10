@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f3efe6;
-  --paper-2: #fffdf8;
-  --ink: #1c1915;
-  --muted: #6f675e;
-  --line: #e4dcd0;
-  --copper: #8f3d1f;
-  --copper-soft: #f6e7de;
-  --good: #1f4d3a;
-  --good-soft: #e7f2ec;
-  --warn: #8a5a12;
-  --warn-soft: #f8efd8;
-  --bad: #8f2d2d;
-  --bad-soft: #f8e6e4;
-  --sidebar: #1c1915;
+  --canvas: #f6f5f8;
+  --paper: #ffffff;
+  --paper-2: #ffffff;
+  --ink: #14121c;
+  --muted: #6e6878;
+  --line: #e8e6ee;
+  --copper: #5b21b6;
+  --copper-deep: #4c1d95;
+  --copper-soft: #f4f0fa;
+  --good: #047857;
+  --good-soft: #ecfdf5;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --bad: #be123c;
+  --bad-soft: #fff1f2;
+  --sidebar: #ffffff;
 }
 
 @theme inline {
+  --color-canvas: var(--canvas);
   --color-paper: var(--paper);
   --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-copper: var(--copper);
+  --color-copper-deep: var(--copper-deep);
   --color-copper-soft: var(--copper-soft);
   --color-good: var(--good);
   --color-good-soft: var(--good-soft);
@@ -44,5 +48,5 @@ body {
 }
 
 ::selection {
-  background: #ead3c6;
+  background: #ddd6fe;
 }

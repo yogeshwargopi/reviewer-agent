@@ -26,13 +26,13 @@ export function Gate({
         <p className="mt-6 text-sm text-ink">GitHub App saved. Sign in with the same GitHub account.</p>
       ) : null}
       {notice === "failed" ? (
-        <p className="mt-6 text-sm text-copper">GitHub did not finish creating the app. Create it again.</p>
+        <p className="mt-6 text-sm text-bad">GitHub did not finish creating the app. Create it again.</p>
       ) : null}
       {notice === "webhook" ? (
-        <p className="mt-6 text-sm text-copper">A public webhook address could not be reserved. Refresh and try again.</p>
+        <p className="mt-6 text-sm text-bad">A public webhook address could not be reserved. Refresh and try again.</p>
       ) : null}
       {notice === "auth" ? (
-        <p className="mt-6 text-sm text-copper">GitHub sign-in did not finish. Use Continue with GitHub again.</p>
+        <p className="mt-6 text-sm text-bad">GitHub sign-in did not finish. Use Continue with GitHub again.</p>
       ) : null}
       {otherMissing.length > 0 ? (
         <section className="mt-8 rounded-lg border border-line bg-paper-2 p-5">
@@ -58,7 +58,7 @@ export function Gate({
           {manifest ? (
             <form className="mt-4" action="https://github.com/settings/apps/new" method="post">
               <input type="hidden" name="manifest" value={manifest} />
-              <button type="submit" className="rounded-md bg-ink px-5 py-3 text-sm text-paper hover:bg-copper">
+              <button type="submit" className="rounded-md bg-copper px-5 py-3 text-sm text-paper hover:bg-copper-deep">
                 Create GitHub App
               </button>
             </form>
@@ -73,7 +73,7 @@ export function Gate({
             await signIn("github", { redirectTo: destination });
           }}
         >
-          <button type="submit" className="rounded-md bg-ink px-5 py-3 text-sm text-paper hover:bg-copper">
+          <button type="submit" className="rounded-md bg-copper px-5 py-3 text-sm text-paper hover:bg-copper-deep">
             Continue with GitHub
           </button>
         </form>

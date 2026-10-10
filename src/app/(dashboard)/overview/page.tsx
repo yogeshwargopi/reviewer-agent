@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 
 export const metadata = { title: "Overview" };
 
+const card = "rounded-2xl border border-line bg-paper shadow-[0_1px_2px_rgba(20,18,28,0.04)]";
+
 export default async function OverviewPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/signin");
@@ -15,89 +17,120 @@ export default async function OverviewPage() {
   const flags = integrationFlags();
   const enabled = data.repositories.filter((repo) => repo.enabled).length;
   const installUrl = `https://github.com/apps/${githubAppSlug()}/installations/new`;
+  const checks = [
+    { ok: flags.githubApp, label: "GitHub App credentials" },
+    { ok: flags.githubOAuth, label: "GitHub sign-in" },
+    { ok: flags.encryption, label: "Secret encryption" },
+    { ok: flags.openai || flags.anthropic, label: "Platform model key" },
+  ];
 
   return (
-    <div className="space-y-10">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+    <div className="space-y-8">
+      <header className="flex flex-wrap items-center justify-between gap-5">
+        <div className="max-w-xl">
           <h1 className="font-serif text-4xl tracking-tight">Overview</h1>
-          <p className="mt-2 max-w-xl text-muted">
+          <p className="mt-2 text-sm leading-6 text-muted">
             Enable a repository and the next pull request gets a review, inline comments, and a check.
           </p>
         </div>
-        <a href={installUrl} className="rounded-md bg-ink px-4 py-2 text-sm text-paper hover:bg-copper">
+        <a
+          href={installUrl}
+          className="rounded-lg bg-copper px-4 py-2.5 text-sm font-medium text-paper shadow-sm transition hover:bg-copper-deep"
+        >
           Install GitHub App
         </a>
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className={`${card} grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0`}>
         <Stat label="Enabled repositories" value={String(enabled)} />
         <Stat label="Reviews this week" value={String(data.completedThisWeek)} />
         <Stat label="Connected accounts" value={String(data.installations.length)} />
       </section>
 
-      <section className="rounded-lg border border-line bg-paper-2 p-5">
-        <h2 className="font-serif text-2xl">Connection</h2>
-        <ul className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-          <Health ok={flags.githubApp} label="GitHub App credentials" />
-          <Health ok={flags.githubOAuth} label="GitHub sign-in" />
-          <Health ok={flags.encryption} label="Secret encryption" />
-          <Health ok={flags.openai || flags.anthropic} label="Platform model key" />
+      <section className={`${card} p-6`}>
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="font-serif text-2xl tracking-tight">Connection</h2>
+          <p className="text-sm text-muted">{checks.every((check) => check.ok) ? "All systems ready" : "Needs attention"}</p>
+        </div>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+          {checks.map((check) => (
+            <Health key={check.label} ok={check.ok} label={check.label} />
+          ))}
         </ul>
       </section>
 
       {data.installations.length === 0 ? (
-        <section className="rounded-lg border border-dashed border-line bg-paper-2 px-6 py-12 text-center">
-          <h2 className="font-serif text-3xl">No installations yet</h2>
-          <p className="mx-auto mt-3 max-w-md text-muted">
+        <section className="rounded-2xl border border-dashed border-line bg-paper px-6 py-16 text-center">
+          <h2 className="font-serif text-3xl tracking-tight">No installations yet</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted">
             Install the app on your user or organization, then come back here and enable the repositories you want
             reviewed.
           </p>
         </section>
       ) : (
-        <section className="space-y-6">
+        <section className="space-y-5">
           {data.installations.map((installation) => {
             const repos = data.repositories.filter((repo) => repo.installationId === installation.id);
+            const initial = installation.accountLogin.slice(0, 1).toUpperCase();
             return (
-              <article key={installation.id} className="rounded-lg border border-line bg-paper-2">
-                <div className="flex items-center justify-between border-b border-line px-5 py-4">
-                  <div>
-                    <h2 className="text-lg">{installation.accountLogin}</h2>
-                    <p className="text-sm text-muted">
-                      {installation.accountType}
-                      {installation.suspended ? " · suspended" : ""}
-                    </p>
+              <article key={installation.id} className={card}>
+                <div className="flex items-center justify-between gap-4 px-5 py-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-copper-soft text-sm font-medium text-copper">
+                      {initial}
+                    </span>
+                    <div className="min-w-0">
+                      <h2 className="truncate text-sm font-medium">{installation.accountLogin}</h2>
+                      <p className="text-xs text-muted">
+                        {installation.accountType}
+                        {installation.suspended ? " · suspended" : ""}
+                      </p>
+                    </div>
                   </div>
-                  <Link href={`/policies/${installation.organizationId}`} className="text-sm text-copper hover:underline">
+                  <Link
+                    href={`/policies/${installation.organizationId}`}
+                    className="shrink-0 text-sm font-medium text-copper transition hover:text-copper-deep"
+                  >
                     Edit policy
                   </Link>
                 </div>
                 {repos.length === 0 ? (
-                  <p className="px-5 py-6 text-sm text-muted">Repository list is still syncing.</p>
+                  <p className="border-t border-line px-5 py-6 text-sm text-muted">Repository list is still syncing.</p>
                 ) : (
-                  <ul>
+                  <ul className="divide-y divide-line border-t border-line">
                     {repos.map((repo) => (
-                      <li key={repo.id} className="flex items-center justify-between gap-4 border-t border-line px-5 py-3">
-                        <div>
-                          <Link href={`/repos/${repo.id}`} className="font-medium hover:text-copper">
+                      <li key={repo.id} className="flex items-center justify-between gap-4 px-5 py-3.5 transition hover:bg-canvas">
+                        <div className="min-w-0">
+                          <Link href={`/repos/${repo.id}`} className="block truncate text-sm font-medium hover:text-copper">
                             {repo.fullName}
                           </Link>
-                          <p className="text-xs text-muted">
-                            {repo.private ? "Private" : "Public"} · {repo.policyMode === "override" ? "Custom policy" : "Inherits organization policy"}
+                          <p className="mt-0.5 text-xs text-muted">
+                            {repo.private ? "Private" : "Public"} ·{" "}
+                            {repo.policyMode === "override" ? "Custom policy" : "Inherits organization policy"}
                           </p>
                         </div>
                         <form action={toggleRepository}>
                           <input type="hidden" name="repositoryId" value={repo.id} />
                           <input type="hidden" name="enabled" value={repo.enabled ? "false" : "true"} />
-                          <button
-                            type="submit"
-                            className={
-                              repo.enabled
-                                ? "rounded-full bg-good-soft px-3 py-1 text-xs font-medium text-good"
-                                : "rounded-full bg-line px-3 py-1 text-xs font-medium text-muted"
-                            }
-                          >
-                            {repo.enabled ? "Enabled" : "Off"}
+                          <button type="submit" aria-pressed={repo.enabled} className="inline-flex items-center gap-2.5">
+                            <span
+                              className={
+                                repo.enabled
+                                  ? "relative inline-flex h-5 w-9 items-center rounded-full bg-copper"
+                                  : "relative inline-flex h-5 w-9 items-center rounded-full bg-[#dddbe3]"
+                              }
+                            >
+                              <span
+                                className={
+                                  repo.enabled
+                                    ? "inline-block size-3.5 translate-x-5 rounded-full bg-paper shadow-sm"
+                                    : "inline-block size-3.5 translate-x-0.5 rounded-full bg-paper shadow-sm"
+                                }
+                              />
+                            </span>
+                            <span className={repo.enabled ? "w-6 text-left text-xs font-medium text-ink" : "w-6 text-left text-xs text-muted"}>
+                              {repo.enabled ? "On" : "Off"}
+                            </span>
                           </button>
                         </form>
                       </li>
@@ -111,9 +144,9 @@ export default async function OverviewPage() {
       )}
 
       <section>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-serif text-2xl">Recent reviews</h2>
-          <Link href="/reviews" className="text-sm text-copper hover:underline">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-serif text-2xl tracking-tight">Recent reviews</h2>
+          <Link href="/reviews" className="text-sm font-medium text-copper transition hover:text-copper-deep">
             View all
           </Link>
         </div>
@@ -125,18 +158,19 @@ export default async function OverviewPage() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-line bg-paper-2 px-4 py-4">
-      <p className="text-xs uppercase tracking-[0.14em] text-muted">{label}</p>
-      <p className="mt-2 font-serif text-3xl">{value}</p>
+    <div className="px-6 py-5">
+      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted">{label}</p>
+      <p className="mt-3 font-serif text-4xl tracking-tight">{value}</p>
     </div>
   );
 }
 
 function Health({ ok, label }: { ok: boolean; label: string }) {
   return (
-    <li className="flex items-center justify-between rounded-md bg-paper px-3 py-2">
-      <span>{label}</span>
-      <span className={ok ? "text-good" : "text-bad"}>{ok ? "Ready" : "Missing"}</span>
+    <li className="flex items-center gap-3 rounded-xl border border-line px-4 py-3 text-sm">
+      <span className={ok ? "size-2 shrink-0 rounded-full bg-good" : "size-2 shrink-0 rounded-full bg-bad"} />
+      <span className="min-w-0 truncate">{label}</span>
+      <span className="ml-auto text-xs text-muted">{ok ? "Ready" : "Missing"}</span>
     </li>
   );
 }
